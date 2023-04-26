@@ -28,8 +28,8 @@ def build_mlp(dims: List[int]) -> nn.Sequential:  # MLP (MultiLayer Perceptron)
 class SNN(nn.Module):  # Example net for MNIST
     def __init__(self):
         super(SNN, self).__init__()
-        self.fc1_s = tdLayer(nn.Linear(2, 64))
-        self.fc2_s =tdLayer(nn.Linear(64, 1))
+        self.fc1_s = tdLayer(nn.Linear(2, 32))
+        self.fc2_s =tdLayer(nn.Linear(32, 1))
 
         self.spike = LIFSpike()
         
@@ -112,7 +112,7 @@ if __name__ == '__main__':
     from domain import Domain
     import time
     domain =  Domain(-10, 10)
-    apn = 8
+    apn = 12
     sin_approximator = UnaryApproximator(torch.sin, apn, domain, 3).cuda()
     sin_approximator.load_state_dict(torch.load(f'funcs_new/sin_{apn}.pkl'))
     cos_approximator = UnaryApproximator(torch.cos, apn, domain, 3).cuda()

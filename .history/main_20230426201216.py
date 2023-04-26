@@ -112,11 +112,11 @@ if __name__ == '__main__':
     from domain import Domain
     import time
     domain =  Domain(-10, 10)
-    apn = 8
-    sin_approximator = UnaryApproximator(torch.sin, apn, domain, 3).cuda()
-    sin_approximator.load_state_dict(torch.load(f'funcs_new/sin_{apn}.pkl'))
-    cos_approximator = UnaryApproximator(torch.cos, apn, domain, 3).cuda()
-    sin_approximator.load_state_dict(torch.load(f'funcs_new/cos_{apn}.pkl'))
+
+    sin_approximator = UnaryApproximator(torch.sin, 8, domain, 3).cuda()
+    sin_approximator.load_state_dict(torch.load('funcs_new/sin_12.pkl'))
+    cos_approximator = UnaryApproximator(torch.cos, 8, domain, 3).cuda()
+    sin_approximator.load_state_dict(torch.load('funcs_new/cos_12.pkl'))
     # snn = ANN().cuda()
     # criterion = nn.CrossEntropyLoss()
     snn = SNN().cuda()

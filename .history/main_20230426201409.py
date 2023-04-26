@@ -28,8 +28,8 @@ def build_mlp(dims: List[int]) -> nn.Sequential:  # MLP (MultiLayer Perceptron)
 class SNN(nn.Module):  # Example net for MNIST
     def __init__(self):
         super(SNN, self).__init__()
-        self.fc1_s = tdLayer(nn.Linear(2, 64))
-        self.fc2_s =tdLayer(nn.Linear(64, 1))
+        self.fc1_s = tdLayer(nn.Linear(2, 32))
+        self.fc2_s =tdLayer(nn.Linear(32, 1))
 
         self.spike = LIFSpike()
         
@@ -112,7 +112,7 @@ if __name__ == '__main__':
     from domain import Domain
     import time
     domain =  Domain(-10, 10)
-    apn = 8
+    apn = 12
     sin_approximator = UnaryApproximator(torch.sin, apn, domain, 3).cuda()
     sin_approximator.load_state_dict(torch.load(f'funcs_new/sin_{apn}.pkl'))
     cos_approximator = UnaryApproximator(torch.cos, apn, domain, 3).cuda()
@@ -131,7 +131,7 @@ if __name__ == '__main__':
     num = len(x_batch)
     # num = 10000
     # x_batch = torch.cat((20*torch.rand(num,1).cuda()-10, 20*torch.rand(num,1).cuda()-10), dim=-1)
-    x_batch = torch.cat((x_batch.cuda(), 20*torch.rand(len(x_batch),1).cuda()-10), dim=-1)
+    x_batch = torch.cat((x_batch.cuda(), torch.rand(len(x_batch),1).cuda() + x_batch.cuda()), dim=-1)
     y_batch = torch.stack([func(x[0],x[1]) for x in x_batch])
     batch_size = 200
     for epoch in range(10000):
